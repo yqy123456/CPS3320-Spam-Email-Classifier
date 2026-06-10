@@ -1,0 +1,8 @@
+Data Processing Report
+============================================
+Source file: D:\Users\Administrator\Desktop\3320\spam\professor_style_spam\spam\combined_data.csv
+Total rows after cleaning: 83448
+Ham (0): 39538
+Spam (1): 43910
+Spam ratio: 52.62%
+Class distribution chart: D:\Users\Administrator\Desktop\3320\spam\professor_style_spam\spam\outputs\class_distribution.png

@@ -1,0 +1,10 @@
+# Dataset is too large for GitHub (140 MB > 100 MB limit)
+combined_data.csv
+
+# Python
+__pycache__/
+*.pyc
+
+# Editor
+.vscode/
+*.bkp

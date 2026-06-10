@@ -1,0 +1,8 @@
+# Tested with Python 3.10.x
+numpy==1.26.4
+pandas==2.3.3
+scikit-learn==1.6.0
+tensorflow==2.18.0
+keras==3.9.0
+matplotlib==3.10.1
+seaborn==0.13.2

@@ -1,0 +1,22 @@
+Email Spam Classifier - Test Results
+============================================
+Dataset: D:\Users\Administrator\Desktop\3320\spam\professor_style_spam\spam_final\combined_data.csv
+Run mode: Loaded saved Keras model only
+
+Main Model: Keras Sequential Neural Network
+Architecture: 1500 + 8 -> 48 (ReLU) -> 1 (sigmoid)
+Optimizer: Adam (lr=0.001) | Loss: binary_crossentropy | L2: 0.0001
+Epochs: 10 | Batch size: 128
+
+Training Loss:
+Final train loss: 0.0464
+Final validation loss: 0.0836
+Loss curve: D:\Users\Administrator\Desktop\3320\spam\professor_style_spam\spam_final\outputs\loss_curve.png
+
+--- My Model ---
+Accuracy:  0.9829
+Precision: 0.9791
+Recall:    0.9886
+F1-score:  0.9838
+ROC-AUC:   0.9975
+TP: 8652  FP: 185  FN: 100  TN: 7753
