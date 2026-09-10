@@ -1,20 +1,16 @@
-# 📧 Email Spam Classifier
+# Email Spam Classifier
 
 > CPS3320 course project — a spam/ham email classifier built with a **Keras Sequential neural network**, compared against three classic ML models, with a Tkinter GUI.
 
-![Python](https://img.shields.io/badge/Python-3.10-3776AB?logo=python&logoColor=white)
-![TensorFlow](https://img.shields.io/badge/TensorFlow-2.18-FF6F00?logo=tensorflow&logoColor=white)
-![Keras](https://img.shields.io/badge/Keras-3.9-D00000?logo=keras&logoColor=white)
-![scikit-learn](https://img.shields.io/badge/scikit--learn-1.6-F7931E?logo=scikitlearn&logoColor=white)
 
-## ✨ Features
+## Features
 
 - **One main AI class** (`SpamEmailClassifier`) with simple step-by-step methods: `read_dataset()` → `separate_data()` → `normalize()` → `build_my_model()` → `train_my_model()` → `calculate_metrics()` → `plot_metrics()`
 - **Tkinter GUI** for profiling data, training, evaluating, and live prediction
 - Compares **My Model** (Keras NN) against **Decision Tree**, **Random Forest**, and **Naive Bayes** on the same fixed train/test split
 - Saves model, vocabulary, reports, and comparison charts to `outputs/`
 
-## 🧠 Model Architecture
+## Model Architecture
 
 ```
 1508 input features  →  48 hidden ReLU units  →  1 sigmoid output
@@ -29,7 +25,7 @@
 - 10 epochs, batch size 128, EarlyStopping (patience = 3)
 - Random seed fixed for Python / NumPy / Keras / scikit-learn
 
-## 📊 Results
+## Results
 
 | Model | Accuracy | Precision | Recall | F1-score | ROC-AUC |
 | ----- | :------: | :-------: | :----: | :------: | :-----: |
@@ -38,7 +34,11 @@
 | Decision Tree | 0.9564 | 0.9598 | 0.9570 | 0.9584 | 0.9582 |
 | Naive Bayes | 0.9400 | 0.9477 | 0.9373 | 0.9424 | 0.9796 |
 
-My Model is essentially tied with Random Forest on accuracy and has the **highest recall** among all four classifiers.
+The saved [comparison CSV](outputs/model_comparison_metrics.csv) supports these
+rounded values. The neural network and random forest are close on this fixed
+split, with the neural network recording higher recall. This is not evidence of
+statistically significant superiority. The source uses an 80/20 random split
+with seed 42; these are historical results, not a new evaluation run.
 
 | Confusion Matrix | Loss Curve |
 | :---: | :---: |
@@ -48,13 +48,13 @@ My Model is essentially tied with Random Forest on accuracy and has the **highes
 | :---: | :---: |
 | ![Model Comparison](outputs/model_comparison.png) | ![ROC Curve](outputs/roc_curve.png) |
 
-## 🖥️ GUI Preview
+## GUI Preview
 
 | | |
 | :---: | :---: |
 | ![Screenshot 1](screenshot/ScreenShot_1.png) | ![Screenshot 2](screenshot/ScreenShot_2.png) |
 
-## 🚀 Getting Started
+## Getting Started
 
 Python **3.10 / 3.11** recommended (TensorFlow may not work on 3.13).
 
@@ -67,9 +67,42 @@ python main.py
 
 **Recommended GUI order:** Profile Data → Train Model → Evaluate Model → type an email and click Predict.
 
-> **Note:** the dataset `combined_data.csv` (~140 MB) is not included in this repo due to GitHub's file size limit. Place a spam/ham email CSV with the same name in the project root before training. `outputs/my_model.keras` and `outputs/vocabulary.json` are included, so **Evaluate Model** and **Predict** work out of the box.
+### Dataset and Saved-Model Requirements
 
-## 📁 Project Structure
+The training dataset `combined_data.csv` is not included. Both **Train Model** and
+**Evaluate Model** read a labeled dataset. The current GUI enables prediction
+after a successful training or evaluation operation; its saved artifacts alone
+do not make the complete GUI workflow dataset-free.
+
+Use a CSV with `text` and `label` columns. Labels should be `ham`/`spam` or 0/1.
+For example:
+
+```csv
+text,label
+"The meeting starts at ten",ham
+"Claim your free prize now",spam
+```
+
+This two-row example shows the schema only; it is not a training dataset.
+Place the real CSV in the project root or select it with the GUI file picker.
+The recorded processing report describes 83,448 cleaned rows. Its original
+download source and dataset version are not recorded in this repository, so
+using an arbitrary replacement CSV will not reproduce the reported metrics.
+
+Saved `outputs/my_model.keras` and `outputs/vocabulary.json` support prediction
+through the Python class without reading a training dataset:
+
+```python
+from spam_classifier.SpamEmailClassifier import SpamEmailClassifier
+
+classifier = SpamEmailClassifier()
+print(classifier.predict_message("The meeting starts at ten."))
+```
+
+This API example follows the saved-model loading path; it is separate from the
+GUI's initialization requirement.
+
+## Project Structure
 
 ```
 .
@@ -82,7 +115,7 @@ python main.py
 └── requirements.txt
 ```
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 - Extract the whole project before running — don't run from inside a zip viewer.
 - If **Train Model** works but direct **Evaluate** fails, it's usually a TensorFlow/Keras version mismatch when loading the saved model. Reinstall from `requirements.txt`, or click **Train Model** once to rebuild the saved model locally.
